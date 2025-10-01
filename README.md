@@ -60,4 +60,5 @@ Hit the run button, and watch as dynamic content pops up on your screen! Whether
 - Add internet archive support
 - Add keyword support (For file tags)
 - Increase amount of customization
+- Implement silent mode (Videos currently play in silence by default).
 - AI?
