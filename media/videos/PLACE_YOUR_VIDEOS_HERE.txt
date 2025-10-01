@@ -1,0 +1,1 @@
+This is the directory for you to place your videos for goonware to load them.
