@@ -61,7 +61,7 @@ def random_choice():
     VideoQ = random.randint(0,100)
     ImageQ = random.randint(0, 100)
     AudioQ = random.randint(0, 100)
-    if VideoQ < (video_chance * 100) and video_count < max_video_count:
+    if VideoQ < (video_chance * 100) and len(video_popup) < max_video_count:
         video_popup.append(goonware_vid.show_silent_popup_video(window=window,videos=videos))
     if ImageQ < (image_chance * 100) and len(image_popup) < max_image_count:
         image_popup.append(goonware_img.show_popup_image(window,images))
