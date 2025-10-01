@@ -52,3 +52,12 @@ Hit the run button, and watch as dynamic content pops up on your screen! Whether
    ```bash
    python main.py
    ```
+### Current Todos:
+
+- Add audio file player
+- Rework settings to make the interface pretty
+- Add autorun feature
+- Add internet archive support
+- Add keyword support (For file tags)
+- Increase amount of customization
+- AI?
