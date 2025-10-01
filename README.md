@@ -54,6 +54,8 @@ Hit the run button, and watch as dynamic content pops up on your screen! Whether
    ```
 ### Current Todos:
 
+- Create first release of .exe, .app and bash script
+
 - Add audio file player
 - Rework settings to make the interface pretty
 - Add autorun feature
