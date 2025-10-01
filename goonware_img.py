@@ -48,14 +48,12 @@ def canvas_load_images(canvas, images):
 
     canvas.coords(image_item, 0, int(canvas["height"]) // 2)
 
-def show_popup_image(window,images, image_count):
-    popup = tk.Toplevel(window)
+def trapclose(popup):
+    print("Closing Image...")
+    popup.destroy()
 
-    def trapclose():
-        global image_count
-        print("Closing Image...")
-        popup.destroy()
-        image_count -= 1
+def show_popup_image(window, images):
+    popup = tk.Toplevel(window)
 
     popup.title("IMAGE Window")
     popup.geometry("200x200")
@@ -67,7 +65,8 @@ def show_popup_image(window,images, image_count):
 
     popup.update()
 
-    popup.protocol("WM_DELETE_WINDOW", trapclose)
+    popup.protocol("WM_DELETE_WINDOW", lambda : trapclose(popup))
 
     popup.geometry(str(str(canvas["width"]) + "x" + str(canvas["height"])))
     print(canvas["width"], canvas["height"])
+    return popup
