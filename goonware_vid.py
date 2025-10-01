@@ -6,6 +6,9 @@ import tkvideo
 
 DEFAULT_VIDEO_DIRECTORY = "media/videos"
 
+
+
+
 def player_video_path(videos):
     video_files = videos
     video_choice = random.randint(0, (len(video_files) - 1))
@@ -14,10 +17,16 @@ def player_video_path(videos):
     print(video_path)
     return video_path
 
-def show_silent_popup_video(window, videos):
+def show_silent_popup_video(window, videos, video_count):
 
     #TODO: CREATE A POPUP THAT PLAYS A VIDEO FROM DIRECTORY media/videos
     popup = tk.Toplevel(window)
+
+    def trapclose():
+        global video_count
+        print("Closing Video...")
+        popup.destroy()
+        video_count -= 1
     popup.title("VIDEO Window")
     popup.geometry("200x200")
     label = tk.Label(popup)
@@ -35,6 +44,5 @@ def show_silent_popup_video(window, videos):
         player = tkvideo.tkvideo(video_path, label, loop=1, size=(int(vid.get(cv2.CAP_PROP_FRAME_WIDTH)), int(vid.get(cv2.CAP_PROP_FRAME_HEIGHT))))
     player.play()
     popup.update()
-    #popup.geometry(str(str(int(vid.get(cv2.CAP_PROP_FRAME_WIDTH))) + "x" + str(int(vid.get(cv2.CAP_PROP_FRAME_HEIGHT)))))
-    print(label["width"], label["height"])
+    popup.protocol("WM_DELETE_WINDOW",trapclose)
     pass

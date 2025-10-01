@@ -4,13 +4,21 @@ import os #File system handling
 import goonware_img #Image Popup Spawner
 import goonware_vid #Video Popup Spawner
 import goonware_aud #Audio Player Spawner
+import goonware_settings_gui #Settings GUI Initilizer
 
 ##TODO AUDIO LIBRARY IMPORT
 
 #General Settings
-cooldownTime = 1000
+cooldownTime = 10000
 images = [] # List to store the PhotoImage objects
 videos = [] # List to store Videos
+audios = [] # List to store audio files
+max_image_count = 1
+image_count = 0
+max_video_count = 1
+video_count = 0
+max_audio_count = 1
+audio_count = 0
 default_videos_directory = "media/videos"
 default_audios_directory = "media/audios"
 silent_mode = True
@@ -29,19 +37,26 @@ def load_videos():
     videos = [f for f in os.listdir(default_videos_directory) if f.endswith(('.mp4', '.mov', '.avi'))]
 
 def random_choice():
+    global video_count
+    global image_count
+    global audio_count
+    global max_image_count
+    global max_video_count
+    global max_audio_count
     VideoQ = random.randint(0,100)
     ImageQ = random.randint(0, 100)
     AudioQ = random.randint(0, 100)
-    if VideoQ < (video_chance * 100) and silent_mode==False:
+    if VideoQ < (video_chance * 100) and video_count < max_video_count:
         #Use audio enabled video player
         pass
     else:
         #Use silent mode video player
-        goonware_vid.show_silent_popup_video(window,videos)
+        goonware_vid.show_silent_popup_video(window=window,videos=videos,video_count=video_count)
+        video_count += 1
         pass
-    if ImageQ < (image_chance * 100):
-        goonware_img.show_popup_image(window=window,images=images)
-    if AudioQ < (audio_chance * 100) and silent_mode==False:
+    if ImageQ < (image_chance * 100) and image_count < max_image_count:
+        goonware_img.show_popup_image(window=window,images=images,image_count=image_count)
+    if AudioQ < (audio_chance * 100) and audio_count < max_audio_count:
         goonware_aud.show_popup_audio()
         pass
 
@@ -50,22 +65,14 @@ def update():
     random_choice()
     window.after(cooldownTime, update)
 
-def cooldownTimeupdate(value):
-    global cooldownTime
-    cooldownTime = value
-    print("cooldown time:", cooldownTime)
-
 load_images()
 load_videos()
 
 window = tk.Tk()
 window.title("Control Panel")
 
-scaleLabel = tk.Label(window, text="Spawn Idle Time (Time in between spawning windows)", font=("Arial", 12))
-scaleScale = tk.Scale(window, orient="horizontal", from_=1000, to=100000, command=cooldownTimeupdate)
-scaleScale.set(cooldownTime)
-scaleLabel.pack(pady=20)
-scaleScale.pack(pady=20)
+window.cooldownTime = cooldownTime
+goonware_settings_gui.settings_widgets_init(window)
 
 window.after(cooldownTime, update)
 window.mainloop()
